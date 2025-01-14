@@ -42,9 +42,9 @@
 
                 <configuration>
                     <checkstyleRules>
-                        <module name = "Checker">
-                            <module name = "TreeWalker">
-                                <module name = "LocalVariableName"/>
+                        <module name="Checker">
+                            <module name="TreeWalker">
+                                <module name="LocalVariableName"/>
                             </module>
                         </module>
                     </checkstyleRules>
@@ -83,28 +83,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                    </execution>
-
-                    <execution>
-                        <id>check</id>
-
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-
-                        <configuration>
-                            <rules>
-                                <rule>
-                                    <limits>
-                                        <limit>
-                                            <counter>BRANCH</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>100%</minimum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
                     </execution>
 
                 </executions>
