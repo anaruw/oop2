@@ -2,61 +2,71 @@ package ru.netology.smarthome;
 
 public class Radio {
 
-    private int radioStation = 0;
-    private int volumeValue = 10;
+    private int minVolumeValue = 0;
+    private int maxVolumeValue = 100;
+    private int currentvolumeValue = 10;
 
-    public void setRadioStation(int radioStation) {
+    private int minRadioStationNumber = 0;
+    private int maxRadioStationNumber;
+    private int currentRadioStationNumber = minRadioStationNumber;
 
-        if ((radioStation < 0) || (radioStation > 9)) {
+    public Radio(int radioStationCount) {
+
+        maxRadioStationNumber = minRadioStationNumber + radioStationCount - 1;
+    }
+
+    public void setRadioStation(int currentRadioStationNumber) {
+
+        if ((currentRadioStationNumber < minRadioStationNumber) || (currentRadioStationNumber > maxRadioStationNumber)) {
 
             return;
         }
-        this.radioStation = radioStation;
+        this.currentRadioStationNumber = currentRadioStationNumber;
     }
 
     public void nextRadioStation() {
 
-        if (radioStation == 9) {
+        if (currentRadioStationNumber == maxRadioStationNumber) {
 
-            radioStation = 0;
+            currentRadioStationNumber = minRadioStationNumber;
             return;
         }
-        radioStation += 1;
+        currentRadioStationNumber += 1;
     }
 
     public void prevRadioStation() {
 
-        if (radioStation == 0) {
+        if (currentRadioStationNumber == minRadioStationNumber) {
 
-            radioStation = 9;
+            currentRadioStationNumber = maxRadioStationNumber;
             return;
         }
-        radioStation -= 1;
+        currentRadioStationNumber -= 1;
     }
 
     public void increaseVolume() {
 
-        if (volumeValue == 100) {
+        if (currentvolumeValue == maxVolumeValue) {
 
             return;
         }
-        volumeValue += 1;
+        currentvolumeValue += 1;
     }
 
     public void decreaseVolume() {
 
-        if (volumeValue == 0) {
+        if (currentvolumeValue == minVolumeValue) {
 
             return;
         }
-        volumeValue -= 1;
+        currentvolumeValue -= 1;
     }
 
     public int getRadioStation() {
-        return radioStation;
+        return currentRadioStationNumber;
     }
 
     public int getVolumeValue() {
-        return volumeValue;
+        return currentvolumeValue;
     }
 }
