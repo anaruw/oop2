@@ -7,12 +7,18 @@ public class Radio {
     private int currentvolumeValue = 10;
 
     private int minRadioStationNumber = 0;
-    private int maxRadioStationNumber;
+    private int maxRadioStationNumber = minRadioStationNumber - 1;
+    private int defaultRadioStationCount = 10;
     private int currentRadioStationNumber = minRadioStationNumber;
+
+    public Radio() {
+
+        maxRadioStationNumber += defaultRadioStationCount;
+    }
 
     public Radio(int radioStationCount) {
 
-        maxRadioStationNumber = minRadioStationNumber + radioStationCount - 1;
+        maxRadioStationNumber += radioStationCount;
     }
 
     public void setRadioStation(int currentRadioStationNumber) {

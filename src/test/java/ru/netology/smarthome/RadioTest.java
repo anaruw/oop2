@@ -7,7 +7,8 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class RadioTest {
 
-    private int radioStationCount = 10;
+    private int radioStationCount = 3;
+    private int defaultRadioStationCount = 10;
 
     private int minRadioStationNumber = 0;
     private int maxRadiostationNumber = minRadioStationNumber + radioStationCount - 1;
@@ -23,13 +24,16 @@ public class RadioTest {
     @CsvFileSource(files = "src/test/resources/setRadioStation.csv")
     public void setRadioStationTest(int setValue, int expected) {
 
+        Radio radio1 = new Radio();
+        maxRadiostationNumber += minRadioStationNumber + defaultRadioStationCount - 1;
+
         if ((setValue < minRadioStationNumber) || (setValue > maxRadiostationNumber)) {
 
-            expected = radio.getRadioStation();
+            expected = radio1.getRadioStation();
         }
-        radio.setRadioStation(setValue);
+        radio1.setRadioStation(setValue);
 
-        int actual = radio.getRadioStation();
+        int actual = radio1.getRadioStation();
 
         Assertions.assertEquals(expected, actual);
     }
@@ -37,10 +41,10 @@ public class RadioTest {
     @Test
     public void nextRadioStationTest() {
 
-        radio.setRadioStation(3);
+        radio.setRadioStation(maxRadiostationNumber - 1);
         radio.nextRadioStation();
 
-        int expected = 4;
+        int expected = maxRadiostationNumber;
 
         int actual = radio.getRadioStation();
 
@@ -63,10 +67,10 @@ public class RadioTest {
     @Test
     public void prevRadioStationTest() {
 
-        radio.setRadioStation(5);
+        radio.setRadioStation(minRadioStationNumber + 1);
         radio.prevRadioStation();
 
-        int expected = 4;
+        int expected = minRadioStationNumber;
 
         int actual = radio.getRadioStation();
 
