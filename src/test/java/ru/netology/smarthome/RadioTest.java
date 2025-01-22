@@ -7,19 +7,33 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class RadioTest {
 
+    private int radioStationCount = 3;
+    private int defaultRadioStationCount = 10;
+
+    private int minRadioStationNumber = 0;
+    private int maxRadiostationNumber = radioStationCount - 1;
+
+    private int minVolumeValue = 0;
+    private int maxVolumeValue = 100;
+
+    Radio radio = new Radio(radioStationCount);
+
+    private int currentVolumeValue = radio.getVolumeValue();
+
     @ParameterizedTest
     @CsvFileSource(files = "src/test/resources/setRadioStation.csv")
     public void setRadioStationTest(int setValue, int expected) {
 
-        Radio radio = new Radio();
+        Radio radio1 = new Radio();
+        maxRadiostationNumber = defaultRadioStationCount - 1;
 
-        if ((setValue < 0) || (setValue > 9)) {
+        if ((setValue < minRadioStationNumber) || (setValue > maxRadiostationNumber)) {
 
-            expected = radio.getRadioStation();
+            expected = radio1.getRadioStation();
         }
-        radio.setRadioStation(setValue);
+        radio1.setRadioStation(setValue);
 
-        int actual = radio.getRadioStation();
+        int actual = radio1.getRadioStation();
 
         Assertions.assertEquals(expected, actual);
     }
@@ -27,12 +41,10 @@ public class RadioTest {
     @Test
     public void nextRadioStationTest() {
 
-        Radio radio = new Radio();
-
-        radio.setRadioStation(3);
+        radio.setRadioStation(maxRadiostationNumber - 1);
         radio.nextRadioStation();
 
-        int expected = 4;
+        int expected = maxRadiostationNumber;
 
         int actual = radio.getRadioStation();
 
@@ -42,12 +54,10 @@ public class RadioTest {
     @Test
     public void nextRadioStationAboveMax() {
 
-        Radio radio = new Radio();
-
-        radio.setRadioStation(9);
+        radio.setRadioStation(maxRadiostationNumber);
         radio.nextRadioStation();
 
-        int expected = 0;
+        int expected = minRadioStationNumber;
 
         int actual = radio.getRadioStation();
 
@@ -57,12 +67,10 @@ public class RadioTest {
     @Test
     public void prevRadioStationTest() {
 
-        Radio radio = new Radio();
-
-        radio.setRadioStation(5);
+        radio.setRadioStation(minRadioStationNumber + 1);
         radio.prevRadioStation();
 
-        int expected = 4;
+        int expected = minRadioStationNumber;
 
         int actual = radio.getRadioStation();
 
@@ -72,12 +80,10 @@ public class RadioTest {
     @Test
     public void prevRadioStationBelowMin() {
 
-        Radio radio = new Radio();
-
-        radio.setRadioStation(0);
+        radio.setRadioStation(minRadioStationNumber);
         radio.prevRadioStation();
 
-        int expected = 9;
+        int expected = maxRadiostationNumber;
 
         int actual = radio.getRadioStation();
 
@@ -86,8 +92,6 @@ public class RadioTest {
 
     @Test
     public void increaseVolumeTest() {
-
-        Radio radio = new Radio();
 
         int expected = radio.getVolumeValue();
         radio.increaseVolume();
@@ -102,16 +106,14 @@ public class RadioTest {
     @Test
     public void increaseVolumeAboveMax() {
 
-        Radio radio = new Radio();
+        for (int i = currentVolumeValue; i <= maxVolumeValue; i++) {
 
-        do {
             radio.increaseVolume();
-
-        } while (radio.getVolumeValue() != 100);
+        }
 
         radio.increaseVolume();
 
-        int expected = 100;
+        int expected = maxVolumeValue;
 
         int actual = radio.getVolumeValue();
 
@@ -120,8 +122,6 @@ public class RadioTest {
 
     @Test
     public void decreaseVolumeTest() {
-
-        Radio radio = new Radio();
 
         int expected = radio.getVolumeValue();
         radio.decreaseVolume();
@@ -136,16 +136,13 @@ public class RadioTest {
     @Test
     public void decreaseVolumeBelowMin() {
 
-        Radio radio = new Radio();
-
-        while (radio.getVolumeValue() != 0) {
+        for (int i = currentVolumeValue; i >= minVolumeValue; i--) {
 
             radio.decreaseVolume();
         }
-
         radio.decreaseVolume();
 
-        int expected = 0;
+        int expected = minVolumeValue;
 
         int actual = radio.getVolumeValue();
 
