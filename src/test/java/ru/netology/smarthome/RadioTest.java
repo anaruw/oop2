@@ -11,7 +11,7 @@ public class RadioTest {
     private int defaultRadioStationCount = 10;
 
     private int minRadioStationNumber = 0;
-    private int maxRadiostationNumber = minRadioStationNumber + radioStationCount - 1;
+    private int maxRadiostationNumber = radioStationCount - 1;
 
     private int minVolumeValue = 0;
     private int maxVolumeValue = 100;
@@ -25,7 +25,7 @@ public class RadioTest {
     public void setRadioStationTest(int setValue, int expected) {
 
         Radio radio1 = new Radio();
-        maxRadiostationNumber += minRadioStationNumber + defaultRadioStationCount - 1;
+        maxRadiostationNumber = defaultRadioStationCount - 1;
 
         if ((setValue < minRadioStationNumber) || (setValue > maxRadiostationNumber)) {
 
